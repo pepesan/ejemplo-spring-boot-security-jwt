@@ -1,4 +1,4 @@
-package com.cursosdedesarrollo.ejemplospringbootsecurityjwtv2.dtos;
+package com.cursosdedesarrollo.ejemplospringbootsecurityjwt.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

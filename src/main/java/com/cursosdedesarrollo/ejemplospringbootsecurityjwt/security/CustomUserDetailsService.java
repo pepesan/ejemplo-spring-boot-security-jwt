@@ -1,7 +1,7 @@
-package com.cursosdedesarrollo.ejemplospringbootsecurityjwtv2.security;
+package com.cursosdedesarrollo.ejemplospringbootsecurityjwt.security;
 
-import com.cursosdedesarrollo.ejemplospringbootsecurityjwtv2.domain.User;
-import com.cursosdedesarrollo.ejemplospringbootsecurityjwtv2.repositories.UserRepository;
+import com.cursosdedesarrollo.ejemplospringbootsecurityjwt.domain.User;
+import com.cursosdedesarrollo.ejemplospringbootsecurityjwt.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,4 +1,4 @@
-package com.cursosdedesarrollo.ejemplospringbootsecurityjwtv2;
+package com.cursosdedesarrollo.ejemplospringbootsecurityjwt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

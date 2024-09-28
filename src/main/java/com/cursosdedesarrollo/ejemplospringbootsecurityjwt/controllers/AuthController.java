@@ -1,8 +1,8 @@
-package com.cursosdedesarrollo.ejemplospringbootsecurityjwtv2.controllers;
+package com.cursosdedesarrollo.ejemplospringbootsecurityjwt.controllers;
 
-import com.cursosdedesarrollo.ejemplospringbootsecurityjwtv2.dtos.JwtAuthResponse;
-import com.cursosdedesarrollo.ejemplospringbootsecurityjwtv2.dtos.LoginDto;
-import com.cursosdedesarrollo.ejemplospringbootsecurityjwtv2.services.AuthService;
+import com.cursosdedesarrollo.ejemplospringbootsecurityjwt.dtos.JwtAuthResponse;
+import com.cursosdedesarrollo.ejemplospringbootsecurityjwt.dtos.LoginDto;
+import com.cursosdedesarrollo.ejemplospringbootsecurityjwt.services.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

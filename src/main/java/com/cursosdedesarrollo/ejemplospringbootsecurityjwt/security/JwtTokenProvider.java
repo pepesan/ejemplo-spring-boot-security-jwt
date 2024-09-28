@@ -1,4 +1,4 @@
-package com.cursosdedesarrollo.ejemplospringbootsecurityjwtv2.security;
+package com.cursosdedesarrollo.ejemplospringbootsecurityjwt.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

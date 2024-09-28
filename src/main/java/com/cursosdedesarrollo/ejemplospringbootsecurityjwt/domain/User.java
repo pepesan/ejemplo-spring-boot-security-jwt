@@ -1,4 +1,4 @@
-package com.cursosdedesarrollo.ejemplospringbootsecurityjwtv2.domain;
+package com.cursosdedesarrollo.ejemplospringbootsecurityjwt.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

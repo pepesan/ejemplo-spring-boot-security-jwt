@@ -1,6 +1,6 @@
-package com.cursosdedesarrollo.ejemplospringbootsecurityjwtv2.repositories;
+package com.cursosdedesarrollo.ejemplospringbootsecurityjwt.repositories;
 
-import com.cursosdedesarrollo.ejemplospringbootsecurityjwtv2.domain.User;
+import com.cursosdedesarrollo.ejemplospringbootsecurityjwt.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
