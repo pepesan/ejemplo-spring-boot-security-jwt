@@ -16,5 +16,8 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
 # configuración de jwt
 app:
-  jwt-secret: daf66e01593f61a15b857cf433aae03a005812b31234e149036bcc8dee755dbb
-  jwt-expiration-milliseconds: 604800000
+  # clave secreta de al menos 32 caracteres
+  # Web generadora: https://jwtsecret.com/generate
+  jwt-secret: 466e88c0a7b2664a58b0c4c7cd3085dbdd28c95310b147451d02395ee59800ff
+  jwt-expiration-milliseconds: 86400000 # un día
+  jwt-refresh-token-milliseconds: 604800000 # 7 días
