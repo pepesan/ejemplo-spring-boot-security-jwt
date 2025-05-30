@@ -1,4 +1,4 @@
-package com.cursosdedesarrollo.ejemplospringbootsecurityjwt.security;
+package com.cursosdedesarrollo.ejemplospringbootsecurityjwt.services;
 
 import com.cursosdedesarrollo.ejemplospringbootsecurityjwt.domain.User;
 import com.cursosdedesarrollo.ejemplospringbootsecurityjwt.repositories.UserRepository;

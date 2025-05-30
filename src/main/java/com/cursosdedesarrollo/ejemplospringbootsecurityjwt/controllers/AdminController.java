@@ -21,4 +21,10 @@ public class AdminController {
     public ResponseEntity<String> helloUser(){
         return ResponseEntity.ok("Hello User");
     }
+
+    @GetMapping("/authz")
+    public ResponseEntity<String> helloAuthUser(){
+        return ResponseEntity.ok("Hello Authenticated User");
+    }
+
 }
