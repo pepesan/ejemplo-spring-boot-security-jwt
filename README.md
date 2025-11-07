@@ -1,5 +1,5 @@
 ## Documentación del proyecto
-
+## Usar postman para las pruebas
 ## Login
 POST http://localhost:8080/api/auth/login
 
