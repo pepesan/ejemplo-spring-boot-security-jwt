@@ -1,7 +1,6 @@
 package com.cursosdedesarrollo.ejemplospringbootsecurityjwt.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import java.security.Key;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -26,68 +24,75 @@ public class JwtTokenProvider {
     @Value("${app.jwt-refresh-token-milliseconds}")
     public long jwtRefreshExpirationDate;
 
-    // generate JWT token
-    public String generateToken(Authentication authentication){
+    // Clave secreta simétrica (HMAC)
+    private SecretKey key() {
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+    }
 
+    // Generar access token
+    public String generateToken(Authentication authentication) {
         String username = authentication.getName();
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + jwtExpirationDate);
 
-        Date currentDate = new Date();
-
-        Date expireDate = new Date(currentDate.getTime() + jwtExpirationDate);
-
-        // 1. Obtener los roles/autoridades del usuario
         String roles = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(",")); // Unir los roles en una cadena separada por comas
+                .collect(Collectors.joining(","));
 
-        // 2. Construir el token, incluyendo el claim "roles"
         return Jwts.builder()
                 .subject(username)
-                .claim("roles", roles) // <<-- Claim añadido con los roles del usuario
-                .issuedAt(new Date())
-                .expiration(expireDate)
-                .signWith(key())
+                .claim("roles", roles)
+                .issuedAt(now)
+                .expiration(expiry)
+                .signWith(key()) // ✅ versión moderna: el algoritmo se elige según la clave
                 .compact();
     }
 
-    // generate refresh token (no modificar Claims inmutables)
+    // Generar refresh token
     public String generateRefreshToken(Authentication authentication) {
         String username = authentication.getName();
         Date now = new Date();
         Date expiry = new Date(now.getTime() + jwtRefreshExpirationDate);
 
-        // Añadir el claim "type" usando el builder en vez de modificar un Claims ya creado
         return Jwts.builder()
                 .subject(username)
                 .claim("type", "refresh")
                 .issuedAt(now)
                 .expiration(expiry)
-                .signWith(key())
+                .signWith(key()) // ✅ igual
                 .compact();
     }
 
-    private Key key(){
-        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
-    }
-
-    // get username from JWT token
-    public String getUsername(String token){
-
+    // Obtener username
+    public String getUsername(String token) {
         return Jwts.parser()
-                .verifyWith((SecretKey) key())
+                .verifyWith(key())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
     }
 
-    // validate JWT token
-    public boolean validateToken(String token){
-        Jwts.parser()
-                .verifyWith((SecretKey) key())
-                .build()
-                .parse(token);
-        return true;
+    // Validar token (con comprobación del algoritmo)
+    public boolean validateToken(String token) {
+        try {
+            Jws<Claims> jwt = Jwts.parser()
+                    .verifyWith(key())
+                    .build()
+                    .parseSignedClaims(token);
 
+            // Validar que el header.alg empareje con el algoritmo esperado
+            String alg = (String) jwt.getHeader().get("alg");
+            if (alg == null || !alg.startsWith("HS")) { // HMAC esperado
+                throw new SecurityException("Algoritmo inesperado: " + alg);
+            }
+
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            System.out.println("Token inválido o expirado: " + e.getMessage());
+        } catch (SecurityException e) {
+            System.out.println("Error de seguridad JWT: " + e.getMessage());
+        }
+        return false;
     }
 }
