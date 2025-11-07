@@ -6,25 +6,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/query")
 public class AdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin")
-    public ResponseEntity<String> helloAdmin(){
-        return ResponseEntity.ok("Hello Admin");
+    public ResponseEntity<Map<String, String>> helloAdmin() {
+        return ResponseEntity.ok(Map.of("message", "Hello Admin"));
     }
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/user")
-    public ResponseEntity<String> helloUser(){
-        return ResponseEntity.ok("Hello User");
+    public ResponseEntity<Map<String, String>> helloUser() {
+        return ResponseEntity.ok(Map.of("message", "Hello User"));
     }
 
     @GetMapping("/authz")
-    public ResponseEntity<String> helloAuthUser(){
-        return ResponseEntity.ok("Hello Authenticated User");
+    public ResponseEntity<Map<String, String>> helloAuthUser() {
+        return ResponseEntity.ok(Map.of("message", "Hello Authenticated User"));
     }
 
 }
