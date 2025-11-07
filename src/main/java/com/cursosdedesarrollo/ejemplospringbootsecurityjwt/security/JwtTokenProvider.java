@@ -1,10 +1,12 @@
 package com.cursosdedesarrollo.ejemplospringbootsecurityjwt.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -22,7 +24,7 @@ public class JwtTokenProvider {
     private long jwtExpirationDate;
 
     @Value("${app.jwt-refresh-token-milliseconds}")
-    private long jwtRefreshExpirationDate;
+    public long jwtRefreshExpirationDate;
 
     // generate JWT token
     public String generateToken(Authentication authentication){
@@ -35,7 +37,7 @@ public class JwtTokenProvider {
 
         // 1. Obtener los roles/autoridades del usuario
         String roles = authentication.getAuthorities().stream()
-                .map(authority -> authority.getAuthority())
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(",")); // Unir los roles en una cadena separada por comas
 
         // 2. Construir el token, incluyendo el claim "roles"
@@ -44,6 +46,22 @@ public class JwtTokenProvider {
                 .claim("roles", roles) // <<-- Claim añadido con los roles del usuario
                 .issuedAt(new Date())
                 .expiration(expireDate)
+                .signWith(key())
+                .compact();
+    }
+
+    // generate refresh token (no modificar Claims inmutables)
+    public String generateRefreshToken(Authentication authentication) {
+        String username = authentication.getName();
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + jwtRefreshExpirationDate);
+
+        // Añadir el claim "type" usando el builder en vez de modificar un Claims ya creado
+        return Jwts.builder()
+                .subject(username)
+                .claim("type", "refresh")
+                .issuedAt(now)
+                .expiration(expiry)
                 .signWith(key())
                 .compact();
     }
