@@ -1,0 +1,37 @@
+###
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "usernameOrEmail": "admin",
+  "password": "admin"
+}
+
+<> 2025-11-07T113143.200.json
+
+###
+GET http://localhost:8080/api/query/admin
+Authorization: Bearer XXXX
+
+<> 2025-11-07T113336.200.txt
+
+###
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "usernameOrEmail": "pepesan",
+  "password": "password"
+}
+
+###
+
+GET http://localhost:8080/api/query/user
+
+Authorization: Bearer XXXXXX
+
+###
+
+GET http://localhost:8080/api/query/authz
+
+Authorization: Bearer XXXXXX

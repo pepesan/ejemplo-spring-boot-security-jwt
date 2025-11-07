@@ -43,9 +43,10 @@ public class SpringSecurityConfig {
                     // configuración específica para que funcione bien la consola de h2
                     authorize.requestMatchers("/h2-console/**").permitAll();
                     authorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
-                    authorize.requestMatchers(HttpMethod.GET, "/api/admin").hasRole("ADMIN");
-                    authorize.requestMatchers(HttpMethod.GET, "/api/user").hasRole("USER");
-//                    authorize.requestMatchers(HttpMethod.PATCH, "/api/**").hasAnyRole("ADMIN", "USER");
+                    authorize.requestMatchers(HttpMethod.GET, "/api/query/admin").hasRole("ADMIN");
+                    authorize.requestMatchers(HttpMethod.GET, "/api/query/user").hasRole("USER");
+                    // authorize.requestMatchers(HttpMethod.GET, "/api/query/**").hasAnyRole("ADMIN", "USER");
+                    // authorize.requestMatchers(HttpMethod.GET, "/api/query/user").hasAnyRole("ADMIN", "USER");
                     authorize.anyRequest().authenticated();
                 }).httpBasic(Customizer.withDefaults());
 

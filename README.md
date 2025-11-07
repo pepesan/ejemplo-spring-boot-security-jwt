@@ -36,7 +36,7 @@ Authorization: Bearer TOKEN
 
 (Sólo user)
 
-GET http://localhost:8080/api/admin
+GET http://localhost:8080/api/user
 
 Authorization: Bearer TOKEN
 
