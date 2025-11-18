@@ -30,13 +30,13 @@ Devolverá un objeto similar a este:
 ## Peticiones Protegidas
 (Sólo admin)
 
-GET http://localhost:8080/api/admin
+GET http://localhost:8080/api/query/admin
 
 Authorization: Bearer TOKEN
 
 (Sólo user)
 
-GET http://localhost:8080/api/user
+GET http://localhost:8080/api/query/user
 
 Authorization: Bearer TOKEN
 
